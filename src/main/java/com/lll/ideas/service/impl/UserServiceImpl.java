@@ -65,13 +65,15 @@ public class UserServiceImpl implements UserService {
     /**
      * 更新用户头像
      *
-     * @param userId
+     * @param user
      * @param avatar
      * @return
      */
     @Override
-    public ResponseResult<Void> updateUserAvatar(Integer userId,MultipartFile avatar){
-        if(avatar.isEmpty()){
+    public ResponseResult<Void> updateUserAvatar(User user,MultipartFile avatar){
+
+        //若上传头像文件为空
+        if(avatar == null){
             return ResponseResult.fail();
         }
 
@@ -100,7 +102,7 @@ public class UserServiceImpl implements UserService {
         try {
             avatar.transferTo(dest);
             User newUser = new User();
-            newUser.setUserId(userId);
+            newUser.setUserId(user.getUserId());
             newUser.setAvatar(storeAvatarPath);
             userMapper.updateUser(newUser);
 

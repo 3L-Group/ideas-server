@@ -20,7 +20,7 @@
         where user_id=#{userId}
     </delete>
 
-    <update id="updateUser" parameterType="User">
+    <update id="updateUser" parameterType="com.lll.ideas.pojo.User">
         update ideas.user
         <set>
             <if test="username != null">

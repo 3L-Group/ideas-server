@@ -44,8 +44,8 @@ public class UserController implements Serializable {
     }
 
     @PostMapping("/updateAvatar")
-    public ResponseResult<Void> updateAvatar(Integer userId,MultipartFile avatar){
-        return userService.updateUserAvatar(userId,avatar);
+    public ResponseResult<Void> updateAvatar(User user,MultipartFile avatar){
+        return userService.updateUserAvatar(user,avatar);
     }
 
 

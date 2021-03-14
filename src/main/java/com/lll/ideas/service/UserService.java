@@ -34,7 +34,7 @@ public interface UserService {
      * @param avatar
      * @return
      */
-    ResponseResult<Void> updateUserAvatar(Integer userId, MultipartFile avatar);
+    ResponseResult<Void> updateUserAvatar(User user, MultipartFile avatar);
 
     /**
      * 查询所有用户
