@@ -3,6 +3,7 @@ package com.lll.ideas.dao;
 import com.lll.ideas.pojo.User;
 import com.lll.ideas.utils.ResponseResult;
 import org.apache.ibatis.annotations.Mapper;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -13,7 +14,7 @@ import java.util.List;
  */
 
 
-public interface UserMapper {
+public interface UserMapper{
     /**
      * 注册
      */
@@ -25,30 +26,45 @@ public interface UserMapper {
     int login(String username,String password);
 
     /**
-     * 删除用户
+     *
+     * @param userId
+     * @return
      */
     int deleteUser(Integer userId);
 
     /**
-     * 更改用户信息
+     *
+     * @param user
+     * @return
      */
     int updateUser(User user);
 
     /**
-     * 查询所有用户
+     *
+     * @return
      */
     List<User> selectAll();
 
 
     /**
-     * 根据用户名查询用户
+     *
+     * @param username
+     * @return
      */
     User selectByUsername(String username);
 
     /**
-     * 根据用户名模糊查询用户
+     *
+     * @param username
+     * @return
      */
     List<User> selectLikeUsername(String username);
 
+    /**
+     * 根据手机号查询用户
+     * @param phone
+     * @return
+     */
+    User selectByPhone(String phone);
 
 }
