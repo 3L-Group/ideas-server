@@ -35,7 +35,7 @@ public interface UserService {
 
     /**
      * 更新用户头像
-     * @param user
+     * @param userId
      * @param avatar
      * @return
      */

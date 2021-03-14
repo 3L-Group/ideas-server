@@ -95,7 +95,7 @@
                 info = #{info},
             </if>
             <if test="avatar != null">
-                avatar = #{avatar},
+                avatar = #{avatar}
             </if>
         </set>
         where user_id = #{userId}

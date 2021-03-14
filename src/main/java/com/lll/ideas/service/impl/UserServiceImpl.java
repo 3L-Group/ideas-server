@@ -77,7 +77,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public ResponseResult<Void> updateUser(User user) {
 
-        if(user == null){
+        if(user.getUserId()==null){
             return ResponseResult.fail();
         }
         user.setUserId(user.getUserId());
@@ -102,13 +102,21 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public ResponseResult<Void> updateUserAvatar(User user,MultipartFile avatar){
-        if(avatar.isEmpty()){
+
+        //若上传头像文件为空
+        if(avatar == null){
             return ResponseResult.fail();
         }
 
         //文件名、文件存放路径名
         String filename = System.currentTimeMillis() +avatar.getOriginalFilename();
-        String filepath = System.getProperty("user.dir") + "/src/resources/avatar";
+        String filepath = System.getProperty("user.dir")
+                + System.getProperty("file.separator")
+                +"src"
+                +System.getProperty("file.separator")
+                +"resources"
+                +System.getProperty("file.separator")
+                +"avatar";
 
         File file = new File(filepath);
 
@@ -118,14 +126,16 @@ public class UserServiceImpl implements UserService {
         }
 
         //拼接绝对路径
-        File dest =new File(filepath + "/" + filename);
+        File dest =new File(filepath + System.getProperty("file.separator") + filename);
         String storeAvatarPath = "/avatar/" + filename;
 
         //持久化到数据库
         try {
             avatar.transferTo(dest);
-            user.setAvatar(storeAvatarPath);
-            userMapper.updateUser(user);
+            User newUser = new User();
+            newUser.setUserId(user.getUserId());
+            newUser.setAvatar(storeAvatarPath);
+            userMapper.updateUser(newUser);
 
             return ResponseResult.ok();
         } catch (IOException e) {
@@ -143,7 +153,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public ResponseResult<List<User>> selectAll() {
         List<User> userList = userMapper.selectAll();
-        if(userList != null){
+        if(!userList.isEmpty()){
             return ResponseResult.ok(userList);
         }
 
@@ -177,7 +187,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public ResponseResult<List<User>> selectLikeUsername(String username) {
         List<User> userList = userMapper.selectLikeUsername(username);
-        if(userList != null){
+        if(!userList.isEmpty()){
             return ResponseResult.ok(userList);
         }
 
