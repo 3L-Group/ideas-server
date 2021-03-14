@@ -1,6 +1,7 @@
 package com.lll.ideas.service;
 
 import com.lll.ideas.enums.ResponseEnum;
+import com.lll.ideas.pojo.TokenPO;
 import com.lll.ideas.pojo.User;
 import com.lll.ideas.utils.ResponseResult;
 import org.springframework.web.multipart.MultipartFile;
@@ -17,7 +18,7 @@ public interface UserService {
      * 用户注册
      * @param user
      */
-    ResponseResult<Void> insertUser(User user);
+    ResponseResult<TokenPO> insertUser(User user);
 
     /**
      * 删除用户
@@ -35,7 +36,7 @@ public interface UserService {
 
     /**
      * 更新用户头像
-     * @param userId
+     * @param user
      * @param avatar
      * @return
      */

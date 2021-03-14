@@ -1,10 +1,12 @@
 package com.lll.ideas.service.impl;
 
 import com.lll.ideas.dao.UserMapper;
+import com.lll.ideas.pojo.TokenPO;
 import com.lll.ideas.pojo.User;
 import com.lll.ideas.service.UserService;
 import com.lll.ideas.utils.MyPasswordEncodeUtil;
 import com.lll.ideas.utils.ResponseResult;
+import com.lll.ideas.utils.TokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -28,6 +30,9 @@ public class UserServiceImpl implements UserService {
     @Resource
     private UserMapper userMapper;
 
+    @Resource
+    private TokenUtil tokenUtil;
+
     private static  final String DEFAULT_USER_IMAGE_URL = "https://pic1.zhimg.com/80/v2-94b9d3b4390326944eed56b03182b1d7_720w.jpg?source=1940ef5c";
 
 
@@ -36,7 +41,7 @@ public class UserServiceImpl implements UserService {
      * @param user
      */
     @Override
-    public ResponseResult<Void> insertUser(User user) {
+    public ResponseResult<TokenPO> insertUser(User user) {
 
         User userByName = userMapper.selectByUsername(user.getUsername());
         if(userByName == null){
@@ -50,7 +55,13 @@ public class UserServiceImpl implements UserService {
             }catch (Exception e){
                 return ResponseResult.fail();
             }
-            return ResponseResult.ok();
+            int affectedRow = userMapper.insertUser(user);
+            if(affectedRow > 0){
+                //生成token
+                TokenPO tokenPO = new TokenPO(tokenUtil.tokenByUserId(user.getUserId()), user);
+                return ResponseResult.ok(tokenPO);
+            }
+            return ResponseResult.fail();
         }else{
             return ResponseResult.fail();
         }

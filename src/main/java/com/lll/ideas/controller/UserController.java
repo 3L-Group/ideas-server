@@ -24,6 +24,15 @@ public class UserController implements Serializable {
     private UserService userService;
 
     /**
+     * 用户注册
+     * @param user
+     * @return
+     */
+    @PostMapping("/register")
+    public ResponseResult<Void> insertUser(User user){
+        return userService.insertUser(user);
+    }
+    /**
      * 删除用户
      * @param userId
      * @return
