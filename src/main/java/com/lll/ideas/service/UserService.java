@@ -29,7 +29,7 @@ public interface UserService {
 
     /**
      * 更新用户头像
-     * @param userId
+     * @param user
      * @param avatar
      * @return
      */

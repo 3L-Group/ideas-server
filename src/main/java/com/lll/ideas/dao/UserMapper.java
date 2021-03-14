@@ -15,10 +15,13 @@ import java.util.List;
 
 
 public interface UserMapper{
+
+
     /**
-     * 注册
+     * 用户注册
+     * @param user
      */
-    int insertUser(User user);
+    void save(User user);
 
     /**
      * 登录(验证账号密码)
