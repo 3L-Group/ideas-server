@@ -3,15 +3,18 @@ package com.lll.ideas.service.impl;
 import com.lll.ideas.dao.UserMapper;
 import com.lll.ideas.pojo.User;
 import com.lll.ideas.service.UserService;
+import com.lll.ideas.utils.MyPasswordEncodeUtil;
 import com.lll.ideas.utils.ResponseResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import java.io.File;
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -24,6 +27,34 @@ public class UserServiceImpl implements UserService {
 
     @Resource
     private UserMapper userMapper;
+
+    private static  final String DEFAULT_USER_IMAGE_URL = "https://pic1.zhimg.com/80/v2-94b9d3b4390326944eed56b03182b1d7_720w.jpg?source=1940ef5c";
+
+
+    /**
+     * 用户注册
+     * @param user
+     */
+    @Override
+    public ResponseResult<Void> insertUser(User user) {
+
+        User userByName = userMapper.selectByUsername(user.getUsername());
+        if(userByName == null){
+            //设置创建时间
+            user.setCreateTime(new Date());
+            //设置默认头像
+            user.setAvatar(DEFAULT_USER_IMAGE_URL);
+            try {
+                //加密密码
+                user.setPassword(MyPasswordEncodeUtil.encode(user.getPassword()));
+            }catch (Exception e){
+                return ResponseResult.fail();
+            }
+            return ResponseResult.ok();
+        }else{
+            return ResponseResult.fail();
+        }
+    }
 
     /**
      * 删除用户

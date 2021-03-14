@@ -21,7 +21,7 @@ public interface UserMapper{
      * 用户注册
      * @param user
      */
-    void save(User user);
+    int insertUser(User user);
 
     /**
      * 登录(验证账号密码)

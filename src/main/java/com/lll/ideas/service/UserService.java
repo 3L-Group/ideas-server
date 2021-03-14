@@ -13,6 +13,11 @@ import java.util.List;
  */
 public interface UserService {
 
+    /**
+     * 用户注册
+     * @param user
+     */
+    ResponseResult<Void> insertUser(User user);
 
     /**
      * 删除用户
