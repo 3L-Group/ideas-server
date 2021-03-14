@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lll.ideas.dao.UserMapper">
+    <resultMap id="BaseResultMap" type="com.lll.ideas.pojo.User">
+        <id column="user_id" jdbcType="INTEGER" property="userId"/>
+        <id column="username" jdbcType="VARCHAR" property="username"/>
+        <id column="password" jdbcType="VARCHAR" property="password"/>
+        <id column="gender" jdbcType="TINYINT" property="gender"/>
+        <id column="phone" jdbcType="VARCHAR" property="phone"/>
+        <id column="info" jdbcType="VARCHAR" property="info"/>
+        <id column="avatar" jdbcType="VARCHAR" property="avatar"/>
+        <id column="create_time" jdbcType="DATE" property="createTime"/>
+    </resultMap>
+
+    <delete id="deleteUser" parameterType="java.lang.Integer">
+        delete from ideas.user
+        where user_id=#{userId}
+    </delete>
+
+    <update id="updateUser" parameterType="User">
+        update ideas.user
+        <set>
+            <if test="username != null">
+                username = #{username},
+            </if>
+            <if test="password != null">
+                password = #{password},
+            </if>
+            <if test="gender != null">
+                gender = #{gender},
+            </if>
+            <if test="phone != null">
+                phone = #{phone},
+            </if>
+            <if test="info != null">
+                info = #{info},
+            </if>
+            <if test="avatar != null">
+                avatar = #{avatar},
+            </if>
+        </set>
+    </update>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        select * from ideas.user
+    </select>
+    
+    <select id="selectByUsername" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select * from ideas.user
+        where username = #{username}
+    </select>
+
+    <select id="selectLikeUsername" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select * from ideas.user
+        where username like #{username}
+    </select>
+
+    <select id="selectByPhone" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select * from ideas.user
+        where phone = #{phone}
+    </select>
+
+</mapper>
