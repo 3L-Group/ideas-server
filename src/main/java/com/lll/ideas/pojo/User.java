@@ -24,4 +24,5 @@ public class User {
     private String avatar;
     private Date createTime;
 
+
 }
