@@ -22,6 +22,7 @@ public interface UserService {
 
     /**
      * 更新用户信息
+     *
      * @param user
      * @return
      */
@@ -39,7 +40,7 @@ public interface UserService {
      * 查询所有用户
      * @return
      */
-    ResponseResult<User> selectAll();
+    ResponseResult<List<User>> selectAll();
 
 
     /**
@@ -55,5 +56,5 @@ public interface UserService {
      * @param username
      * @return
      */
-    ResponseResult<User> selectLikeUsername(String username);
+    ResponseResult<List<User>> selectLikeUsername(String username);
 }

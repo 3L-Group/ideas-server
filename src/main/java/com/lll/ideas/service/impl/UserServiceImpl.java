@@ -12,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.annotation.Resource;
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * @Author lbh
@@ -45,9 +46,14 @@ public class UserServiceImpl implements UserService {
     @Override
     public ResponseResult<Void> updateUser(User user) {
 
+        if(user == null){
+            return ResponseResult.fail();
+        }
+        user.setUserId(user.getUserId());
         user.setUsername(user.getUsername());
         user.setPassword(user.getPassword());
-        user.setGender(new Byte(user.getGender()));
+        Byte gender = user.getGender();
+        user.setGender(gender);
         user.setPhone(user.getPhone());
         user.setInfo(user.getInfo());
 
@@ -58,6 +64,7 @@ public class UserServiceImpl implements UserService {
 
     /**
      * 更新用户头像
+     *
      * @param user
      * @param avatar
      * @return
@@ -95,7 +102,6 @@ public class UserServiceImpl implements UserService {
             return ResponseResult.fail();
         }
 
-
     }
 
     /**
@@ -104,8 +110,14 @@ public class UserServiceImpl implements UserService {
      * @return
      */
     @Override
-    public ResponseResult<User> selectAll() {
-        return null;
+    public ResponseResult<List<User>> selectAll() {
+        List<User> userList = userMapper.selectAll();
+        if(userList != null){
+            return ResponseResult.ok(userList);
+        }
+
+        return ResponseResult.fail();
+
     }
 
     /**
@@ -116,7 +128,13 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public ResponseResult<User> selectByUsername(String username) {
-        return null;
+        User user = userMapper.selectByUsername(username);
+        if(user != null){
+            return ResponseResult.ok(user);
+        }
+
+        return ResponseResult.fail();
+
     }
 
     /**
@@ -126,7 +144,12 @@ public class UserServiceImpl implements UserService {
      * @return
      */
     @Override
-    public ResponseResult<User> selectLikeUsername(String username) {
-        return null;
+    public ResponseResult<List<User>> selectLikeUsername(String username) {
+        List<User> userList = userMapper.selectLikeUsername(username);
+        if(userList != null){
+            return ResponseResult.ok(userList);
+        }
+
+        return ResponseResult.fail();
     }
 }
