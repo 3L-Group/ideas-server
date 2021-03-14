@@ -30,11 +30,11 @@ public interface UserService {
 
     /**
      * 更新用户头像
-     * @param user
+     * @param userId
      * @param avatar
      * @return
      */
-    ResponseResult<Void> updateUserAvatar(User user, MultipartFile avatar);
+    ResponseResult<Void> updateUserAvatar(Integer userId, MultipartFile avatar);
 
     /**
      * 查询所有用户
