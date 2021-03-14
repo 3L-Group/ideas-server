@@ -49,4 +49,5 @@ public interface UserMapper {
      * 根据用户名模糊查询用户
      */
     List<User> selectLikeUsername(String username);
+
 }
