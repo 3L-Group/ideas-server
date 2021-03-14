@@ -42,6 +42,7 @@
                 avatar = #{avatar},
             </if>
         </set>
+        where user_id = #{userId}
     </update>
 
     <select id="selectAll" resultMap="BaseResultMap">
@@ -55,7 +56,7 @@
 
     <select id="selectLikeUsername" resultMap="BaseResultMap" parameterType="java.lang.String">
         select * from ideas.user
-        where username like #{username}
+        where username like concat(concat('%',#{username}),'%')
     </select>
 
     <select id="selectByPhone" resultMap="BaseResultMap" parameterType="java.lang.String">
