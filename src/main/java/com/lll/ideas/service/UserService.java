@@ -29,6 +29,14 @@ public interface UserService {
     ResponseResult<TokenPO> insertUser(User user, String verifyCode);
 
     /**
+     * 用户登录
+     * @param username
+     * @param password
+     * @return
+     */
+    ResponseResult<TokenPO>userLogin(String username, String password);
+
+    /**
      * 删除用户
      * @return
      */

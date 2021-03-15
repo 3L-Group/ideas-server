@@ -80,6 +80,23 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public ResponseResult<TokenPO> userLogin(String username, String password) {
+        User user = userMapper.selectByUsername(username);
+        try{
+            //输入pwd加密
+            String encode = MyPasswordEncodeUtil.encode(password);
+            if(user != null && MyPasswordEncodeUtil.matches(user.getPassword(),encode)){
+                TokenPO tokenPO = new TokenPO(TokenUtil.genToken(user.getUserId()), user);
+                return ResponseResult.ok(tokenPO);
+            }else{
+                return ResponseResult.fail(ResponseEnum.USER_LOGIN_ERROE.getCode(),ResponseEnum.USER_LOGIN_ERROE.getMsg());
+            }
+        }catch (Exception e){
+            return ResponseResult.fail();
+        }
+    }
+
+    @Override
     public ResponseResult<Void> deleteUser(Integer userId) {
         userMapper.deleteUser(userId);
         return ResponseResult.ok();

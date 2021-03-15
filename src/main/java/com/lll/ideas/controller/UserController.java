@@ -38,15 +38,26 @@ public class UserController implements Serializable {
     /**
      * 用户注册
      * @param user
+     * @param verifyCode
      * @return
      */
     @PostMapping("/register")
     public ResponseResult<TokenPO> insertUser(User user, String verifyCode){
         return userService.insertUser(user, verifyCode);
     }
+
+    /**
+     * 用户登录
+     * @param username 用户名
+     * @param password 用户密码
+     * @return
+     */
+    @PostMapping("/login")
+    public ResponseResult<TokenPO> userLogin(String username, String password){ return userService.userLogin(username,password); }
+
     /**
      * 删除用户
-     * @param userId
+     * @param userId 用户id
      * @return
      */
     @PostMapping("/delete")

@@ -24,11 +24,6 @@ public interface UserMapper{
     int insertUser(User user);
 
     /**
-     * 登录(验证账号密码)
-     */
-    int login(String username,String password);
-
-    /**
      *
      * @param userId
      * @return
