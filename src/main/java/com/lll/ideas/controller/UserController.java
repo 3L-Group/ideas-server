@@ -1,15 +1,17 @@
 package com.lll.ideas.controller;
 
+import com.lll.ideas.pojo.Article;
 import com.lll.ideas.pojo.PO.TokenPO;
 import com.lll.ideas.pojo.User;
 import com.lll.ideas.pojo.VO.UserVO;
 import com.lll.ideas.service.UserService;
 import com.lll.ideas.utils.ResponseResult;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -75,7 +77,7 @@ public class UserController implements Serializable {
      * @return
      */
     @GetMapping("/selectAll")
-    public ResponseResult<List<User>> selectAll(){
+    public ResponseResult<List<UserVO>> selectAll(){
         return userService.selectAll();
     }
 
@@ -95,7 +97,59 @@ public class UserController implements Serializable {
      * @return
      */
     @GetMapping("/selectLikeUsername")
-    public ResponseResult<List<User>> selectLikeUsername(String username){
+    public ResponseResult<List<UserVO>> selectLikeUsername(String username){
         return userService.selectLikeUsername(username);
+    }
+
+    /**
+     * 查询关注列表
+     * @param userId
+     * @return
+     */
+    @GetMapping("/selectFollowList")
+    public ResponseResult<List<Integer>> selectFollowList(Integer userId){
+        return userService.selectFollowList(userId);
+    }
+
+    /**
+     * 查询粉丝列表
+     * @param userId
+     * @return
+     */
+    @GetMapping("/selectFollowerList")
+    public ResponseResult<List<Integer>> selectFollowerList(Integer userId){
+        return userService.selectFollowerList(userId);
+    }
+
+    /**
+     * 关注其他用户
+     * @param followingId
+     * @param followedId
+     * @return
+     */
+    @PostMapping("/follow")
+    public ResponseResult<Void> follow(Integer followingId,Integer followedId){
+        return userService.follow(followingId,followedId);
+    }
+
+    /**
+     * 取关
+     * @param followingId
+     * @param followedId
+     * @return
+     */
+    @PostMapping("/cancelFollow")
+    public ResponseResult<Void> cancelFollow(Integer followingId,Integer followedId){
+        return userService.cancelFollow(followingId,followedId);
+    }
+
+    /**
+     * 查询用户的所有文章
+     * @param userId
+     * @return
+     */
+    @GetMapping("/selectArticleList")
+    public ResponseResult<List<Article>> selectArticleList(Integer userId){
+        return userService.selectArticleList(userId);
     }
 }

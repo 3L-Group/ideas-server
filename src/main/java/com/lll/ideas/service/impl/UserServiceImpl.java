@@ -2,6 +2,7 @@ package com.lll.ideas.service.impl;
 
 import com.lll.ideas.dao.UserMapper;
 import com.lll.ideas.enums.ResponseEnum;
+import com.lll.ideas.pojo.Article;
 import com.lll.ideas.pojo.PO.TokenPO;
 import com.lll.ideas.pojo.User;
 import com.lll.ideas.pojo.VO.UserVO;
@@ -148,10 +149,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public ResponseResult<List<User>> selectAll() {
+    public ResponseResult<List<UserVO>> selectAll() {
         List<User> userList = userMapper.selectAll();
-        if(!userList.isEmpty()){
-            return ResponseResult.ok(userList);
+        List<UserVO> userVOList = null;
+
+        for (User user : userList) {
+            UserVO userVO = convert(user);
+            userVOList.add(userVO);
+        }
+        if(!userVOList.isEmpty()){
+            return ResponseResult.ok(userVOList);
         }
 
         return ResponseResult.fail();
@@ -171,14 +178,53 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public ResponseResult<List<User>> selectLikeUsername(String username) {
+    public ResponseResult<List<UserVO>> selectLikeUsername(String username) {
         List<User> userList = userMapper.selectLikeUsername(username);
-        if(!userList.isEmpty()){
-            return ResponseResult.ok(userList);
+        List<UserVO> userVOList = null;
+        for (User user : userList) {
+            UserVO userVO = convert(user);
+            userVOList.add(userVO);
+        }
+
+        if(!userVOList.isEmpty()){
+            return ResponseResult.ok(userVOList);
         }
 
         return ResponseResult.fail(ResponseEnum.USER_NOT_FOUND.getCode(), ResponseEnum.USER_NOT_FOUND.getMsg());
     }
+
+    @Override
+    public ResponseResult<List<Integer>> selectFollowList(Integer userId) {
+        List<Integer> followList = userMapper.selectFollowList(userId);
+        return ResponseResult.ok(followList);
+
+    }
+
+    @Override
+    public ResponseResult<List<Integer>> selectFollowerList(Integer userId) {
+        List<Integer> followerList = userMapper.selectFollowerList(userId);
+        return ResponseResult.ok(followerList);
+    }
+
+    @Override
+    public ResponseResult<Void> follow(Integer followingId, Integer followedId) {
+        userMapper.follow(followingId, followedId);
+        return ResponseResult.ok();
+    }
+
+    @Override
+    public ResponseResult<Void> cancelFollow(Integer followingId, Integer followedId) {
+        userMapper.cancelFollow(followingId,followedId);
+        return ResponseResult.ok();
+    }
+
+
+    @Override
+    public ResponseResult<List<Article>> selectArticleList(Integer userId) {
+        List<Article> articleList = userMapper.selectArticleList(userId);
+        return ResponseResult.ok(articleList);
+    }
+
 
     /**
      * user 转换成 userVO

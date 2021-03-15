@@ -1,5 +1,6 @@
 package com.lll.ideas.service;
 
+import com.lll.ideas.pojo.Article;
 import com.lll.ideas.pojo.PO.TokenPO;
 import com.lll.ideas.pojo.User;
 import com.lll.ideas.pojo.VO.UserVO;
@@ -54,7 +55,7 @@ public interface UserService {
      * 查询所有用户
      * @return
      */
-    ResponseResult<List<User>> selectAll();
+    ResponseResult<List<UserVO>> selectAll();
 
 
     /**
@@ -70,5 +71,45 @@ public interface UserService {
      * @param username
      * @return
      */
-    ResponseResult<List<User>> selectLikeUsername(String username);
+    ResponseResult<List<UserVO>> selectLikeUsername(String username);
+
+
+    /**
+     * 查询关注列表
+     * @param userId
+     * @return
+     */
+    ResponseResult<List<Integer>> selectFollowList(Integer userId);
+
+
+    /**
+     * 查询粉丝列表
+     * @param userId
+     * @return
+     */
+    ResponseResult<List<Integer>> selectFollowerList(Integer userId);
+
+    /**
+     * 关注其他用户
+     * @param followingId
+     * @param followedId
+     * @return
+     */
+    ResponseResult<Void> follow(Integer followingId,Integer followedId);
+
+    /**
+     * 取关
+     * @param followingId
+     * @param followedId
+     * @return
+     */
+    ResponseResult<Void> cancelFollow(Integer followingId, Integer followedId);
+
+    /**
+     * 查询用户的所有文章
+     * @param userId
+     * @return
+     */
+    ResponseResult<List<Article>> selectArticleList(Integer userId);
+
 }

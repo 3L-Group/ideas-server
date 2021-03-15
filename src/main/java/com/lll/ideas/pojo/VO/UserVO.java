@@ -1,6 +1,9 @@
 package com.lll.ideas.pojo.VO;
 
+import com.lll.ideas.pojo.Article;
 import lombok.Data;
+
+import java.util.List;
 
 /**
  * @Author: qyl
@@ -41,4 +44,9 @@ public class UserVO {
      * 用户的粉丝
      */
     private Integer follower;
+    /**
+     * 用户的文章
+     */
+    private List<Article> articleList;
+
 }

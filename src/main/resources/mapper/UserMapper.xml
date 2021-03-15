@@ -132,4 +132,20 @@
         where followed_id = #{userId}
     </select>
 
+    <insert id="follow" parameterType="java.lang.Integer">
+        insert into ideas.user_follow (following_id,followed_id)
+        values (#{followingId},#{followedId})
+    </insert>
+
+    <delete id="cancelFollow" parameterType="java.lang.Integer">
+        delete from ideas.user_follow
+        where following_id = #{followingId} and followed_id = #{followedId}
+    </delete>
+
+    <select id="selectArticleList" parameterType="java.lang.Integer" resultType="Article">
+        select *
+        from ideas.article
+        where author_id = #{userId}
+    </select>
+
 </mapper>
