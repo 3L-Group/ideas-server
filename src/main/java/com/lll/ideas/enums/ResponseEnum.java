@@ -9,6 +9,8 @@ public enum ResponseEnum {
     FAIL(0, "失败"),
 
     // 用户模块错误
+    USER_NOT_FOUND(1001, "用户不存在"),
+    AVATAR_IS_NULL(1002, "头像为空"),
     ;
 
     /**

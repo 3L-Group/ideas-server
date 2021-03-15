@@ -48,7 +48,6 @@ public interface UserMapper{
      */
     List<User> selectAll();
 
-
     /**
      *
      * @param username

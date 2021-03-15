@@ -1,7 +1,6 @@
 package com.lll.ideas.service;
 
-import com.lll.ideas.enums.ResponseEnum;
-import com.lll.ideas.pojo.TokenPO;
+import com.lll.ideas.pojo.PO.TokenPO;
 import com.lll.ideas.pojo.User;
 import com.lll.ideas.utils.ResponseResult;
 import org.springframework.web.multipart.MultipartFile;

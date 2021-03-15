@@ -1,16 +1,14 @@
 package com.lll.ideas.service.impl;
 
 import com.lll.ideas.dao.UserMapper;
-import com.lll.ideas.pojo.TokenPO;
+import com.lll.ideas.enums.ResponseEnum;
+import com.lll.ideas.pojo.PO.TokenPO;
 import com.lll.ideas.pojo.User;
 import com.lll.ideas.service.UserService;
 import com.lll.ideas.utils.MyPasswordEncodeUtil;
 import com.lll.ideas.utils.ResponseResult;
 import com.lll.ideas.utils.TokenUtil;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
@@ -89,7 +87,7 @@ public class UserServiceImpl implements UserService {
     public ResponseResult<Void> updateUser(User user) {
 
         if(user.getUserId()==null){
-            return ResponseResult.fail();
+            return ResponseResult.fail(ResponseEnum.USER_NOT_FOUND.getCode(), ResponseEnum.USER_NOT_FOUND.getMsg());
         }
         user.setUserId(user.getUserId());
         user.setUsername(user.getUsername());
@@ -116,7 +114,7 @@ public class UserServiceImpl implements UserService {
 
         //若上传头像文件为空
         if(avatar == null){
-            return ResponseResult.fail();
+            return ResponseResult.fail(ResponseEnum.AVATAR_IS_NULL.getCode(), ResponseEnum.AVATAR_IS_NULL.getMsg());
         }
 
         //文件名、文件存放路径名

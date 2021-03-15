@@ -1,5 +1,6 @@
-package com.lll.ideas.pojo;
+package com.lll.ideas.pojo.PO;
 
+import com.lll.ideas.pojo.User;
 import lombok.Data;
 
 /**
@@ -16,7 +17,7 @@ public class TokenPO {
     private String token;
 
     /**
-     * 用户id
+     * 用户
      */
     private User user;
 
