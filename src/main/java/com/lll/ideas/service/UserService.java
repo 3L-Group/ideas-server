@@ -13,11 +13,19 @@ import java.util.List;
  */
 public interface UserService {
 
+
+    /**
+     * 发送验证码
+     * @param phone
+     * @return
+     */
+    ResponseResult<String> sendVerificationCode(String phone);
+
     /**
      * 用户注册
      * @param user
      */
-    ResponseResult<TokenPO> insertUser(User user);
+    ResponseResult<TokenPO> insertUser(User user, String verifyCode);
 
     /**
      * 删除用户

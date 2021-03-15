@@ -7,7 +7,9 @@ import com.lll.ideas.pojo.User;
 import com.lll.ideas.service.UserService;
 import com.lll.ideas.utils.component.MyPasswordEncodeUtil;
 import com.lll.ideas.utils.ResponseResult;
+import com.lll.ideas.utils.component.RedisUtil;
 import com.lll.ideas.utils.component.TokenUtil;
+import com.lll.ideas.utils.component.VerifyCodeUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -16,6 +18,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @Author lbh
@@ -28,21 +31,33 @@ public class UserServiceImpl implements UserService {
     @Resource
     private UserMapper userMapper;
 
-    @Resource
-    private TokenUtil tokenUtil;
+    private static final String DEFAULT_USER_IMAGE_URL = "https://pic1.zhimg.com/80/v2-94b9d3b4390326944eed56b03182b1d7_720w.jpg?source=1940ef5c";
 
-    private static  final String DEFAULT_USER_IMAGE_URL = "https://pic1.zhimg.com/80/v2-94b9d3b4390326944eed56b03182b1d7_720w.jpg?source=1940ef5c";
+    private static final String USER_PHONE_CODE = "user:phone:code:";
 
+    @Override
+    public ResponseResult<String> sendVerificationCode(String phone) {
+        // 通过手机号判断用户是否存在
+        if (userMapper.selectByPhone(phone) != null) {
+            return ResponseResult.fail(ResponseEnum.USER_EXIST.getCode(), ResponseEnum.USER_EXIST.getMsg());
+        }
+        String code = VerifyCodeUtil.generateCode(6);
+        RedisUtil.setValue(USER_PHONE_CODE + phone, code, 5, TimeUnit.MINUTES);
+        return ResponseResult.ok(code);
+    }
 
     /**
      * 用户注册
      * @param user
      */
     @Override
-    public ResponseResult<TokenPO> insertUser(User user) {
+    public ResponseResult<TokenPO> insertUser(User user, String verifyCode) {
+        if (verifyCode.equals(RedisUtil.getValue(USER_PHONE_CODE + user.getPhone()))) {
+            return ResponseResult.fail(ResponseEnum.VERIFY_CODE_INCORRECT.getCode(), ResponseEnum.VERIFY_CODE_INCORRECT.getMsg());
+        }
 
         User userByName = userMapper.selectByUsername(user.getUsername());
-        if(userByName == null){
+        if (userByName == null){
             //设置创建时间
             user.setCreateTime(new Date());
             //设置默认头像
@@ -56,13 +71,11 @@ public class UserServiceImpl implements UserService {
             int affectedRow = userMapper.insertUser(user);
             if(affectedRow > 0){
                 //生成token
-                TokenPO tokenPO = new TokenPO(tokenUtil.tokenByUserId(user.getUserId()), user);
+                TokenPO tokenPO = new TokenPO(TokenUtil.genToken(user.getUserId()), user);
                 return ResponseResult.ok(tokenPO);
             }
-            return ResponseResult.fail();
-        }else{
-            return ResponseResult.fail();
         }
+        return ResponseResult.fail();
     }
 
     /**

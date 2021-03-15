@@ -1,5 +1,6 @@
 package com.lll.ideas.controller;
 
+import com.lll.ideas.pojo.PO.TokenPO;
 import com.lll.ideas.pojo.User;
 import com.lll.ideas.service.UserService;
 import com.lll.ideas.utils.ResponseResult;
@@ -24,13 +25,23 @@ public class UserController implements Serializable {
     private UserService userService;
 
     /**
+     * 发送验证码
+     * @param phone
+     * @return
+     */
+    @PostMapping("/send")
+    public ResponseResult<String> sendVerificationCode(String phone) {
+        return userService.sendVerificationCode(phone);
+    }
+
+    /**
      * 用户注册
      * @param user
      * @return
      */
     @PostMapping("/register")
-    public ResponseResult<Void> insertUser(User user){
-        return userService.insertUser(user);
+    public ResponseResult<TokenPO> insertUser(User user, String verifyCode){
+        return userService.insertUser(user, verifyCode);
     }
     /**
      * 删除用户
