@@ -1,4 +1,4 @@
-package com.lll.ideas.utils;
+package com.lll.ideas.utils.component;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;

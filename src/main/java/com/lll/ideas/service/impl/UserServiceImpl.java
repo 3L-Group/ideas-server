@@ -5,9 +5,9 @@ import com.lll.ideas.enums.ResponseEnum;
 import com.lll.ideas.pojo.PO.TokenPO;
 import com.lll.ideas.pojo.User;
 import com.lll.ideas.service.UserService;
-import com.lll.ideas.utils.MyPasswordEncodeUtil;
+import com.lll.ideas.utils.component.MyPasswordEncodeUtil;
 import com.lll.ideas.utils.ResponseResult;
-import com.lll.ideas.utils.TokenUtil;
+import com.lll.ideas.utils.component.TokenUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 

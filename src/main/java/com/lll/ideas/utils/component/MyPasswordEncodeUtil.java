@@ -1,4 +1,4 @@
-package com.lll.ideas.utils;
+package com.lll.ideas.utils.component;
 
 import org.springframework.util.DigestUtils;
 
