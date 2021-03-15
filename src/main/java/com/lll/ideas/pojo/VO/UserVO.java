@@ -1,20 +1,16 @@
-package com.lll.ideas.pojo;
+package com.lll.ideas.pojo.VO;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.util.List;
 
 /**
- * @Author lbh
- * @Date 2021/3/14
+ * @Author: qyl
+ * @Date: 2021/3/15 10:45
+ * @Description:
  */
-
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
-public class User {
+public class UserVO {
     /**
      * 用户id
      */
@@ -23,10 +19,6 @@ public class User {
      * 用户名
      */
     private String username;
-    /**
-     * 用户密码
-     */
-    private String password;
     /**
      * 用户性别
      */
@@ -44,8 +36,11 @@ public class User {
      */
     private String avatar;
     /**
-     * 创建时间
+     * 用户关注的博主
      */
-    private Date createTime;
-
+    private List<Integer> follow;
+    /**
+     * 用户的粉丝
+     */
+    private List<Integer> follower;
 }
