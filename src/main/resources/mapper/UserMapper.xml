@@ -71,6 +71,8 @@
 
     </insert>
 
+
+
     <delete id="deleteUser" parameterType="java.lang.Integer">
         delete from ideas.user
         where user_id=#{userId}

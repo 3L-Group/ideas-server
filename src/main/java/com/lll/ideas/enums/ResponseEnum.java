@@ -13,6 +13,7 @@ public enum ResponseEnum {
     USER_EXIST(1002, "用户已存在"),
     AVATAR_IS_NULL(1003, "头像为空"),
     VERIFY_CODE_INCORRECT(1004, "验证码不正确"),
+    USER_LOGIN_ERROE(1005,"用户名不存在或者密码不正确")
     ;
 
     /**
