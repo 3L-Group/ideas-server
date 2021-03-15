@@ -31,10 +31,15 @@ public class UserServiceImpl implements UserService {
     @Resource
     private UserMapper userMapper;
 
-    private static final String DEFAULT_USER_IMAGE_URL = "https://pic1.zhimg.com/80/v2-94b9d3b4390326944eed56b03182b1d7_720w.jpg?source=1940ef5c";
+    private static final String DEFAULT_USER_IMAGE_URL = "src/main/resources/avatar/default.jpg";
 
     private static final String USER_PHONE_CODE = "user:phone:code:";
 
+    /**
+     * 发送验证码
+     * @param phone
+     * @return
+     */
     @Override
     public ResponseResult<String> sendVerificationCode(String phone) {
         // 通过手机号判断用户是否存在
@@ -52,7 +57,11 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public ResponseResult<TokenPO> insertUser(User user, String verifyCode) {
-        if (verifyCode.equals(RedisUtil.getValue(USER_PHONE_CODE + user.getPhone()))) {
+
+        /**
+         * 校验验证码
+         */
+        if (verifyCode==null || !verifyCode.equals(RedisUtil.getValue(USER_PHONE_CODE + user.getPhone()))) {
             return ResponseResult.fail(ResponseEnum.VERIFY_CODE_INCORRECT.getCode(), ResponseEnum.VERIFY_CODE_INCORRECT.getMsg());
         }
 
@@ -75,7 +84,7 @@ public class UserServiceImpl implements UserService {
                 return ResponseResult.ok(tokenPO);
             }
         }
-        return ResponseResult.fail();
+        return ResponseResult.fail(ResponseEnum.USER_EXIST.getCode(), ResponseEnum.USER_EXIST.getMsg());
     }
 
     /**
@@ -196,7 +205,7 @@ public class UserServiceImpl implements UserService {
             return ResponseResult.ok(user);
         }
 
-        return ResponseResult.fail();
+        return ResponseResult.fail(ResponseEnum.USER_NOT_FOUND.getCode(), ResponseEnum.USER_NOT_FOUND.getMsg());
 
     }
 
@@ -213,6 +222,6 @@ public class UserServiceImpl implements UserService {
             return ResponseResult.ok(userList);
         }
 
-        return ResponseResult.fail();
+        return ResponseResult.fail(ResponseEnum.USER_NOT_FOUND.getCode(), ResponseEnum.USER_NOT_FOUND.getMsg());
     }
 }
