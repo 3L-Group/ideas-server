@@ -58,10 +58,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public ResponseResult<TokenPO> insertUser(User user, String verifyCode) {
 
-        /**
-         * 校验验证码
-         */
-        if (verifyCode==null || !verifyCode.equals(RedisUtil.getValue(USER_PHONE_CODE + user.getPhone()))) {
+        //校验验证码
+        if (!verifyCode.equals(RedisUtil.getValue(USER_PHONE_CODE + user.getPhone()))) {
             return ResponseResult.fail(ResponseEnum.VERIFY_CODE_INCORRECT.getCode(), ResponseEnum.VERIFY_CODE_INCORRECT.getMsg());
         }
 

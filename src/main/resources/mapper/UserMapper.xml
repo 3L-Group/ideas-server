@@ -112,7 +112,7 @@
 
     <select id="selectLikeUsername" resultMap="BaseResultMap" parameterType="java.lang.String">
         select * from ideas.user
-        where username like concat(concat('%',#{username}),'%')
+        where username like concat(#{username},'%')
     </select>
 
     <select id="selectByPhone" resultMap="BaseResultMap" parameterType="java.lang.String">

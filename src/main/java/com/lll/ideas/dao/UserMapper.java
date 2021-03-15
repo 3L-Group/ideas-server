@@ -1,10 +1,7 @@
 package com.lll.ideas.dao;
 
 import com.lll.ideas.pojo.User;
-import com.lll.ideas.utils.ResponseResult;
-import org.apache.ibatis.annotations.Mapper;
-import org.springframework.context.annotation.Bean;
-import org.springframework.stereotype.Repository;
+
 
 import java.util.List;
 
