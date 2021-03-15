@@ -2,8 +2,6 @@ package com.lll.ideas.pojo.VO;
 
 import lombok.Data;
 
-import java.util.List;
-
 /**
  * @Author: qyl
  * @Date: 2021/3/15 10:45
@@ -38,9 +36,9 @@ public class UserVO {
     /**
      * 用户关注的博主
      */
-    private List<Integer> follow;
+    private Integer follow;
     /**
      * 用户的粉丝
      */
-    private List<Integer> follower;
+    private Integer follower;
 }

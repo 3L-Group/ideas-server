@@ -2,6 +2,7 @@ package com.lll.ideas.service;
 
 import com.lll.ideas.pojo.PO.TokenPO;
 import com.lll.ideas.pojo.User;
+import com.lll.ideas.pojo.VO.UserVO;
 import com.lll.ideas.utils.ResponseResult;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -61,7 +62,7 @@ public interface UserService {
      * @param username
      * @return
      */
-    ResponseResult<User> selectByUsername(String username);
+    ResponseResult<UserVO> selectByUsername(String username);
 
 
     /**

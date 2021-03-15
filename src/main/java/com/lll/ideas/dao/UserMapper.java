@@ -69,4 +69,18 @@ public interface UserMapper{
      */
     User selectByPhone(String phone);
 
+
+    /**
+     * 查询关注列表
+     * @param userId
+     * @return
+     */
+    List<Integer> selectFollowList(Integer userId);
+
+    /**
+     * 查询粉丝列表
+     * @param userId
+     * @return
+     */
+    List<Integer> selectFollowerList(Integer userId);
 }

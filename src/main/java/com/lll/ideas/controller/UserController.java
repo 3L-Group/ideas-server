@@ -2,6 +2,7 @@ package com.lll.ideas.controller;
 
 import com.lll.ideas.pojo.PO.TokenPO;
 import com.lll.ideas.pojo.User;
+import com.lll.ideas.pojo.VO.UserVO;
 import com.lll.ideas.service.UserService;
 import com.lll.ideas.utils.ResponseResult;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -84,7 +85,7 @@ public class UserController implements Serializable {
      * @return
      */
     @GetMapping("/selectByUsername")
-    public ResponseResult<User> selectByUsername(String username){
+    public ResponseResult<UserVO> selectByUsername(String username){
         return userService.selectByUsername(username);
     }
 

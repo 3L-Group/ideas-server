@@ -4,6 +4,7 @@ import com.lll.ideas.dao.UserMapper;
 import com.lll.ideas.enums.ResponseEnum;
 import com.lll.ideas.pojo.PO.TokenPO;
 import com.lll.ideas.pojo.User;
+import com.lll.ideas.pojo.VO.UserVO;
 import com.lll.ideas.service.UserService;
 import com.lll.ideas.utils.component.MyPasswordEncodeUtil;
 import com.lll.ideas.utils.ResponseResult;
@@ -35,11 +36,6 @@ public class UserServiceImpl implements UserService {
 
     private static final String USER_PHONE_CODE = "user:phone:code:";
 
-    /**
-     * 发送验证码
-     * @param phone
-     * @return
-     */
     @Override
     public ResponseResult<String> sendVerificationCode(String phone) {
         // 通过手机号判断用户是否存在
@@ -51,10 +47,6 @@ public class UserServiceImpl implements UserService {
         return ResponseResult.ok(code);
     }
 
-    /**
-     * 用户注册
-     * @param user
-     */
     @Override
     public ResponseResult<TokenPO> insertUser(User user, String verifyCode) {
 
@@ -87,24 +79,12 @@ public class UserServiceImpl implements UserService {
         return ResponseResult.fail(ResponseEnum.USER_EXIST.getCode(), ResponseEnum.USER_EXIST.getMsg());
     }
 
-    /**
-     * 删除用户
-     *
-     * @param userId
-     * @return
-     */
     @Override
     public ResponseResult<Void> deleteUser(Integer userId) {
         userMapper.deleteUser(userId);
         return ResponseResult.ok();
     }
 
-    /**
-     * 更新用户信息
-     *
-     * @param user
-     * @return
-     */
     @Override
     public ResponseResult<Void> updateUser(User user) {
 
@@ -124,13 +104,6 @@ public class UserServiceImpl implements UserService {
         return ResponseResult.ok();
     }
 
-    /**
-     * 更新用户头像
-     *
-     * @param user
-     * @param avatar
-     * @return
-     */
     @Override
     public ResponseResult<Void> updateUserAvatar(User user,MultipartFile avatar){
 
@@ -176,11 +149,6 @@ public class UserServiceImpl implements UserService {
 
     }
 
-    /**
-     * 查询所有用户
-     *
-     * @return
-     */
     @Override
     public ResponseResult<List<User>> selectAll() {
         List<User> userList = userMapper.selectAll();
@@ -192,29 +160,18 @@ public class UserServiceImpl implements UserService {
 
     }
 
-    /**
-     * 根据用户名查询用户
-     *
-     * @param username
-     * @return
-     */
     @Override
-    public ResponseResult<User> selectByUsername(String username) {
+    public ResponseResult<UserVO> selectByUsername(String username) {
         User user = userMapper.selectByUsername(username);
         if(user != null){
-            return ResponseResult.ok(user);
+            UserVO userVO = convert(user);
+            return ResponseResult.ok(userVO);
         }
 
         return ResponseResult.fail(ResponseEnum.USER_NOT_FOUND.getCode(), ResponseEnum.USER_NOT_FOUND.getMsg());
 
     }
 
-    /**
-     * 根据用户名模糊查询用户
-     *
-     * @param username
-     * @return
-     */
     @Override
     public ResponseResult<List<User>> selectLikeUsername(String username) {
         List<User> userList = userMapper.selectLikeUsername(username);
@@ -223,5 +180,22 @@ public class UserServiceImpl implements UserService {
         }
 
         return ResponseResult.fail(ResponseEnum.USER_NOT_FOUND.getCode(), ResponseEnum.USER_NOT_FOUND.getMsg());
+    }
+
+    /**
+     * user 转换成 userVO
+     * @param user
+     * @return
+     */
+    private UserVO convert(User user) {
+        UserVO userVO = new UserVO();
+        userVO.setUserId(user.getUserId());
+        userVO.setGender(user.getGender());
+        userVO.setPhone(user.getPhone());
+        userVO.setInfo(user.getInfo());
+        userVO.setAvatar(user.getAvatar());
+        userVO.setFollow(userMapper.selectFollowList(user.getUserId()).size());
+        userVO.setFollower(userMapper.selectFollowerList(user.getUserId()).size());
+        return userVO;
     }
 }
