@@ -120,4 +120,16 @@
         where phone = #{phone}
     </select>
 
+    <select id="selectFollowList" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+        select followed_id
+        from ideas.user_follow
+        where following_id = #{userId}
+    </select>
+
+    <select id="selectFollowerList" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+        select following_id
+        from ideas.user_follow
+        where followed_id = #{userId}
+    </select>
+
 </mapper>
