@@ -31,14 +31,13 @@ public class ArticleServiceImpl implements ArticleService {
 
         //内容不能为空
         if(article.getContent() == null){
-            return ResponseResult.fail(ResponseEnum.CONTENT_IS_NULL.getCode(), ResponseEnum.CONTENT_IS_NULL.getMsg());
+            return ResponseResult.fail(ResponseEnum.ARTICLE_CONTENT_IS_NULL.getCode(), ResponseEnum.ARTICLE_CONTENT_IS_NULL.getMsg());
         }
 
         //设置创建时间
         Date date = new Date();
         article.setUpdateTime(date);
 
-        System.out.println(date);
         articleMapper.insertArticle(article);
         return ResponseResult.ok();
 
