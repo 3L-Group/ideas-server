@@ -21,7 +21,7 @@ import java.util.List;
  */
 
 @RestController
-@RequestMapping("/User")
+@RequestMapping("/user")
 public class UserController implements Serializable {
 
     @Autowired

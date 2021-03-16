@@ -88,7 +88,7 @@ public class UserServiceImpl implements UserService {
                 TokenPO tokenPO = new TokenPO(TokenUtil.genToken(user.getUserId()), user);
                 return ResponseResult.ok(tokenPO);
             }else{
-                return ResponseResult.fail(ResponseEnum.USER_LOGIN_ERROE.getCode(),ResponseEnum.USER_LOGIN_ERROE.getMsg());
+                return ResponseResult.fail(ResponseEnum.USER_LOGIN_ERROR.getCode(),ResponseEnum.USER_LOGIN_ERROR.getMsg());
             }
         }catch (Exception e){
             return ResponseResult.fail();

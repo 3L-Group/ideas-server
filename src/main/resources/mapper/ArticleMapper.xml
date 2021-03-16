@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lll.ideas.dao.ArticleMapper">
+    <resultMap id="BaseResultMap" type="com.lll.ideas.pojo.Article">
+        <id column="article_id" jdbcType="INTEGER" property="articleId"/>
+        <id column="author_id" jdbcType="INTEGER" property="authorId"/>
+        <id column="title" jdbcType="VARCHAR" property="title"/>
+        <id column="content" jdbcType="LONGVARCHAR" property="content"/>
+        <id column="star" jdbcType="INTEGER" property="star"/>
+        <id column="view" jdbcType="INTEGER" property="view"/>
+        <id column="update_time" jdbcType="DATE" property="updateTime"/>
+    </resultMap>
+
+    <insert id="insertArticle" parameterType="Article">
+        insert into ideas.article
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="articleId != null">
+                article_id,
+            </if>
+            <if test="authorId != null">
+                author_id,
+            </if>
+            <if test="title != null">
+                title,
+            </if>
+            <if test="content != null">
+                content,
+            </if>
+            <if test="star != null">
+                star,
+            </if>
+            <if test="view != null">
+                view,
+            </if>
+            update_time,
+        </trim>
+        <trim prefix=" values(" suffix=")" suffixOverrides=",">
+            <if test="articleId != null">
+                #{articleId},
+            </if>
+            <if test="authorId != null">
+                #{authorId},
+            </if>
+            <if test="title != null">
+                #{title},
+            </if>
+            <if test="content != null">
+                #{content},
+            </if>
+            <if test="star != null">
+                #{star},
+            </if>
+            <if test="view != null">
+                #{view},
+            </if>
+            now(),
+        </trim>
+    </insert>
+
+    <update id="updateArticle" parameterType="Article">
+        update ideas.article
+        <set>
+            <if test="authorId != null">
+                author_id = #{authorId},
+            </if>
+            <if test="title != null">
+                title = #{title},
+            </if>
+            <if test="content != null">
+                content = #{content},
+            </if>
+            <if test="star != null">
+                star = #{star},
+            </if>
+            <if test="view != null">
+                view = #{view},
+            </if>
+                update_time = now()
+        </set>
+        where article_id = #{articleId}
+    </update>
+
+    <delete id="deleteArticle" parameterType="java.lang.Integer">
+        delete from ideas.article
+        where article_id = #{articleId}
+    </delete>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        select * from ideas.article
+    </select>
+
+    <select id="selectByTitle" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select * from ideas.article
+        where title = #{title}
+    </select>
+
+    <select id="selectLikeTitle" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select * from ideas.article
+        where title like concat(concat('%',#{title}),'%')
+    </select>
+
+    <select id="selectByAuthorId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select * from ideas.article
+        where author_id = #{authorId}
+    </select>
+
+
+</mapper>
