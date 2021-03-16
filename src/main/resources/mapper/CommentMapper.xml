@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lll.ideas.dao.CommentMapper">
+    <resultMap id="BaseResultMap" type="com.lll.ideas.pojo.Comment">
+        <id column="comment_id" jdbcType="INTEGER" property="commentId"/>
+        <id column="article_id" jdbcType="INTEGER" property="articleId"/>
+        <id column="reviewer_id" jdbcType="INTEGER" property="reviewerId"/>
+        <id column="content" jdbcType="VARCHAR" property="content"/>
+        <id column="create_time" jdbcType="DATE" property="createTime"/>
+    </resultMap>
+
+    <insert id="insertComment" parameterType="Comment">
+        insert into ideas.comment
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="commentId != null">
+                comment_id,
+            </if>
+            <if test="articleId != null">
+                article_id,
+            </if>
+            <if test="reviewerId != null">
+                reviewer_id,
+            </if>
+            <if test="content != null">
+                content,
+            </if>
+            create_time,
+        </trim>
+        <trim prefix=" values(" suffix=")" suffixOverrides=",">
+            <if test="commentId != null">
+                #{commentId},
+            </if>
+            <if test="articleId != null">
+                #{articleId},
+            </if>
+            <if test="reviewerId != null">
+                #{reviewerId},
+            </if>
+            <if test="content != null">
+                #{content},
+            </if>
+            now(),
+        </trim>
+    </insert>
+
+    <delete id="deleteComment" parameterType="java.lang.Integer">
+        delete from ideas.comment
+        where comment_id = #{commentId}
+    </delete>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        select * from ideas.comment
+    </select>
+
+</mapper>
