@@ -17,8 +17,11 @@ public enum ResponseEnum {
 
     // 文章模块错误
     ARTICLE_NOT_FOUND(2001,"文章不存在"),
-    TITLE_IS_NULL(2002,"标题为空"),
-    CONTENT_IS_NULL(2003,"内容为空")
+    TITLE_IS_NULL(2002,"文章标题为空"),
+    ARTICLE_CONTENT_IS_NULL(2003,"文章内容为空"),
+
+    // 评论模块错误
+    COMMENT_CONTENT_IS_NULL(3001,"评论内容为空")
     ;
 
     /**
